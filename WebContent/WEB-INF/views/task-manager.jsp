@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -9,12 +9,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 <title>Task Manager</title>
 </head>
 <body>
 <h1>Task Manager</h1>
-
+<h4>Tarefas de <%out.println((String) request.getSession().getAttribute("nome")); %></h4>
+<%if ((Integer) request.getAttribute("size") < 1 ){ %>
+<h4> Não há tarefas. Crie algumas abaixo!</h4>
+<% } else {%>
 <table border="1">
 <tr>
 <th>Task</th>
@@ -41,10 +43,13 @@
 </tr>
 </c:forEach>
 </table>
-
+<%} %>
+<br>
 <form action="Cria" method='post'>
 <input type="text" name="tarefa"> 
 <input type="submit" value="Adicione uma task">
 </form>
+<br>
+<a href="Login">Sair</a>
 </body>
 </html>

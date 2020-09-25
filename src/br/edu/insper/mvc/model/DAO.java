@@ -37,12 +37,12 @@ public class DAO {
 		return cadastros;		
 	}
 	
-	public List<Tarefa> getListaTarefas() throws SQLException {
+	public List<Tarefa> getListaTarefas(Integer id) throws SQLException {
 		
 		List<Tarefa> tarefas = new ArrayList<Tarefa>();
 		
 		PreparedStatement stmt = connection.prepareStatement(
-				"SELECT * FROM Tarefas");
+				"SELECT * FROM Tarefas WHERE cadastro_id=" + id);
 		ResultSet rs = stmt.executeQuery();
 		
 		while (rs.next()) {
@@ -71,10 +71,10 @@ public class DAO {
 	}
 	
 	public void adicionaTarefa(Tarefa tarefa) throws SQLException {
-		String sql = "INSERT INTO Tarefas" + "(tarefa) VALUES(?)";
+		String sql = "INSERT INTO Tarefas" + "(cadastro_id, tarefa) VALUES(?, ?)";
 		PreparedStatement stmt = connection.prepareStatement(sql);
-		/*stmt.setInt(1, tarefa.getCadastroId());*/
-		stmt.setString(1, tarefa.getTarefa());
+		stmt.setInt(1, tarefa.getCadastroId());
+		stmt.setString(2, tarefa.getTarefa());
 		stmt.execute();
 		stmt.close();
 	}

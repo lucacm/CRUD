@@ -1,12 +1,11 @@
 package br.edu.insper.mvc.controller;
-import java.util.*;
-import javax.servlet.*;
-import javax.servlet.annotation.WebServlet;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,16 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 import br.edu.insper.mvc.model.*;
 
 /**
- * Servlet implementation class Lista
+ * Servlet implementation class Cadastra
  */
-@WebServlet("/Lista")
-public class Lista extends HttpServlet {
+@WebServlet("/Cadastra")
+public class Cadastra extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Lista() {
+    public Cadastra() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,38 +31,28 @@ public class Lista extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/cria-cadastro.html");
+		dispatcher.forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-	
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		DAO dao;
 		try {
 			dao = new DAO();
-			
-		Integer id = (Integer) request.getSession().getAttribute("id");
-		
-		List<Tarefa> tarefas = dao.getListaTarefas(id);
-		
-		int size = tarefas.size();
-	
-		request.setAttribute("size", size);
-		request.setAttribute("tarefas", tarefas);
-		dao.close();
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/task-manager.jsp");
-		dispatcher.forward(request, response);
 
-		
+			Cadastro cadastro = new Cadastro();
+			cadastro.setNome(request.getParameter("nome"));
+			cadastro.setLogin(request.getParameter("login"));
+			cadastro.setSenha(request.getParameter("senha"));
+			dao.adicionaCadastro(cadastro);
+			dao.close();
+			
+			response.sendRedirect("Login");
+			
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -72,5 +61,5 @@ public class Lista extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-}
 
+}

@@ -2,14 +2,9 @@ package br.edu.insper.mvc.controller;
 
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
-import javax.servlet.RequestDispatcher;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -45,9 +40,6 @@ public class Cria extends HttpServlet {
     protected void doGet(HttpServletRequest request, 
     		HttpServletResponse response) 
     				throws ServletException, IOException {
-    	RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/cria-tarefa.html");
-		dispatcher.forward(request, response);
-
     }
     
     @Override
@@ -58,9 +50,11 @@ public class Cria extends HttpServlet {
     	DAO dao;
     	try {
     		dao = new DAO();
-
+    		
+    		Integer id = (Integer) request.getSession().getAttribute("id");
     		Tarefa tarefa = new Tarefa();
     		tarefa.setTarefa(request.getParameter("tarefa"));
+    		tarefa.setCadastroId(id);
       		dao.adicionaTarefa(tarefa);
     		dao.close();
     		response.sendRedirect("Lista");
