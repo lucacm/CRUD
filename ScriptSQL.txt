@@ -8,7 +8,6 @@ CREATE TABLE `cadastros` (
   `senha` char(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
----------------------------------------------------------------
 
 CREATE TABLE `tarefas` (
   `id` int NOT NULL AUTO_INCREMENT,
