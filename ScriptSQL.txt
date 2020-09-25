@@ -1,14 +1,16 @@
-| cadastros | CREATE TABLE `cadastros` (
+CREATE DATABASE meus_dados;
+USE meus_dados
+
+CREATE TABLE `cadastros` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nome` char(255) DEFAULT NULL,
   `login` char(255) DEFAULT NULL,
   `senha` char(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
-
+);
 ---------------------------------------------------------------
 
-| tarefas | CREATE TABLE `tarefas` (
+CREATE TABLE `tarefas` (
   `id` int NOT NULL AUTO_INCREMENT,
   `cadastro_id` int DEFAULT NULL,
   `tarefa` text NOT NULL,
@@ -17,4 +19,4 @@
   PRIMARY KEY (`id`),
   KEY `cadastro_id` (`cadastro_id`),
   CONSTRAINT `tarefas_ibfk_1` FOREIGN KEY (`cadastro_id`) REFERENCES `cadastros` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
+);
